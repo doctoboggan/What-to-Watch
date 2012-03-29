@@ -8,8 +8,8 @@ from nltk.corpus import stopwords
 
 #Some code and ideas taken from Shankar Ambady
 #https://github.com/shanbady/NLTK-Boston-Python-Meetup
-username = 'doctoboggan'
-password = 'trixie'
+username = 'your_username_here'
+password = 'pass'
 
 wordlemmatizer = WordNetLemmatizer() #finds the root word in a word
 commonwords = stopwords.words('english') #list of common words that usually mean nothing
