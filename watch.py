@@ -69,7 +69,6 @@ for line in r.iter_lines():
       if match.group(1) not in currentTvShows:
         currentTvShows.append(match.group(1))
 
-totalCount = numpy.zeros(len(currentTvShows))
 sentiment = {}
 for show in currentTvShows:
   sentiment[show] = {'pos':0, 'neg':0, 'tot':0}
