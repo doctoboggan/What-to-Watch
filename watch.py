@@ -3,13 +3,13 @@
 #import all the things we need
 import re, random, os, glob
 import tweetstream, requests, numpy
-from nltk import word_tokenize, WordNetLemmatizer, NaiveBayesClassifier, classify
+from nltk import word_tokenize, WordNetLemmatizer, NaiveBayesClassifier
 from nltk.corpus import stopwords
 
 #Some code and ideas taken from Shankar Ambady
 #https://github.com/shanbady/NLTK-Boston-Python-Meetup
-username = 'your_username_here'
-password = 'pass'
+username = 'your_username_here' #twitter username here
+password = 'pass'               #twitter pass here
 
 wordlemmatizer = WordNetLemmatizer() #finds the root word in a word
 commonwords = stopwords.words('english') #list of common words that usually mean nothing
@@ -77,7 +77,6 @@ for show in currentTvShows:
 stream = tweetstream.TrackStream(username, password, currentTvShows)
 for tweet in stream:
   if tweet.has_key('text'):    
-    print 'NEWEST TWEET: ', tweet['text']
     features = findFeatures(tweet['text'])
     classification = classifier.classify(features)
     for show in currentTvShows:
