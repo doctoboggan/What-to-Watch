@@ -8,8 +8,8 @@ from nltk.corpus import stopwords
 
 #Some code and ideas taken from Shankar Ambady
 #https://github.com/shanbady/NLTK-Boston-Python-Meetup
-username = 'your_username_here' #twitter username here
-password = 'pass'               #twitter pass here
+username = 'doctoboggan' #twitter username here
+password = 'fooledyou'               #twitter pass here
 
 wordlemmatizer = WordNetLemmatizer() #finds the root word in a word
 commonwords = stopwords.words('english') #list of common words that usually mean nothing
@@ -60,6 +60,7 @@ print 'Done'
 #initialize an empty list to hold all the TV shows we find
 currentTvShows = []
 
+#Scrape the currently airing shows (Current 4 hour block)
 r = requests.get('http://www.locatetv.com/listings')
 for line in r.iter_lines():
   if '  <a href="/tv/' in line or '  <a href="/movie/' in line:
@@ -69,15 +70,20 @@ for line in r.iter_lines():
       if match.group(1) not in currentTvShows:
         currentTvShows.append(match.group(1))
 
+#initialize a dict to store ratings of every show
 sentiment = {}
 for show in currentTvShows:
   sentiment[show] = {'pos':0, 'neg':0, 'tot':0}
 
+#open a twitter stream searching for tweets about the current show.
 stream = tweetstream.TrackStream(username, password, currentTvShows)
 for tweet in stream:
   if tweet.has_key('text'):    
+    #make a features dictionary of the tweet
     features = findFeatures(tweet['text'])
+    #classify the tweet
     classification = classifier.classify(features)
+    #store the tweet rating in the dictionary
     for show in currentTvShows:
       if show.lower() in tweet['text'].lower():
         sentiment[show]['tot'] += 1
